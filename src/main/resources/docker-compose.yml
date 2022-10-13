@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  server:
+    image: 'alirizakocas/customer-service:latest'
+    container_name: 'customer-api'
+    ports:
+      - 8080:8080
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/qnbeyond?allowPublicKeyRetrieval=true&useSSL=false
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    platform: linux/x86_64
+    image: 'alirizakocas/mysql_db:latest'
+    container_name: 'mysql'
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: qnbeyond
+      MYSQL_USER: sa
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_ROOT_HOST: localhost
